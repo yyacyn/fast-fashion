@@ -1,8 +1,56 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Main brand colors - soft peach and coral pink */
+  --peach: #ffe6c9;
+  --coral: #ffa09b;
+  --coral-dark: #ff8882;
+  --peach-dark: #f8d4b0;
+
+  /* Base colors */
+  --background: #fffaf5;
+  --foreground: #4a3f35;
+
+  /* Card and UI elements */
+  --card-background: #ffffff;
+  --card-foreground: #4a3f35;
+  --card-shadow: 0 10px 15px -3px rgba(255, 160, 155, 0.1), 0 4px 6px -2px rgba(255, 160, 155, 0.05);
+
+  /* Primary colors - using coral */
+  --primary: #ffa09b;
+  --primary-foreground: #ffffff;
+  --primary-hover: #ff8882;
+
+  /* Secondary colors - using peach */
+  --secondary: #ffe6c9;
+  --secondary-foreground: #4a3f35;
+  --secondary-hover: #f8d4b0;
+
+  /* Accent colors */
+  --accent: #fff0e6;
+  --accent-foreground: #d86a5a;
+
+  /* Form elements */
+  --input-border: #ffd6c9;
+  --input-background: #ffffff;
+  --input-focus: #ffa09b;
+  --input-focus-ring: rgba(255, 160, 155, 0.2);
+
+  /* Muted elements */
+  --muted: #fff0e6;
+  --muted-foreground: #9e8d7e;
+
+  /* Borders */
+  --border: #ffd6c9;
+  --border-radius: 0.5rem;
+
+  /* Success/Error states */
+  --success: #7dce82;
+  --error: #ff7070;
+
+  /* Transitions */
+  --transition-fast: 150ms;
+  --transition-normal: 250ms;
 }
 
 @theme inline {
@@ -12,15 +60,83 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  /* Main brand colors - darker versions for dark mode */
+  --peach: #5f4d3a;
+  --coral: #d86a5a;
+  --coral-dark: #c25a4a;
+  --peach-dark: #4a3f35;
+
+  /* Base colors */
+  --background: #2a2520;
+  --foreground: #f8efe6;
+
+  /* Card and UI elements */
+  --card-background: #3a332d;
+  --card-foreground: #f8efe6;
+  --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+
+  /* Primary colors */
+  --primary: #d86a5a;
+  --primary-foreground: #ffffff;
+  --primary-hover: #e87a6a;
+
+  /* Secondary colors */
+  --secondary: #5f4d3a;
+  --secondary-foreground: #f8efe6;
+  --secondary-hover: #6f5d4a;
+
+  /* Accent colors */
+  --accent: #3a2a25;
+  --accent-foreground: #ffa09b;
+
+  /* Form elements */
+  --input-border: #5f4d3a;
+  --input-background: #3a332d;
+  --input-focus: #d86a5a;
+  --input-focus-ring: rgba(216, 106, 90, 0.4);
+
+  /* Muted elements */
+  --muted: #3a332d;
+  --muted-foreground: #bfb0a0;
+
+  /* Borders */
+  --border: #5f4d3a;
+
+  /* Success/Error states remain the same */
+  --success: #7dce82;
+  --error: #ff7070;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+/* Add smooth transitions for all elements */
+* {
+  transition: border-color var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
 }

@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Search, MapPin, Filter, X, Menu, Phone, Navigation, ChevronLeft } from "lucide-react"
-import StoreMapWrapper from "./store-map-wrapper"
-import '../app/globals.css';
+import { useState, useEffect } from "react";
+import { Search, MapPin, Filter, X, Menu, Phone, Navigation, ChevronLeft } from "lucide-react";
+import dynamic from "next/dynamic";  // Updated import
+import "../app/globals.css";
 import SAMPLE_STORES from "../data/sample-stores";
 
 // Import custom components
@@ -18,9 +18,13 @@ import {
     CardTitle,
     Separator,
     Badge,
-} from "./ui/custom-components"
-import React from "react"
+} from "./ui/custom-components";
+import React from "react";
 import Link from "next/link";
+
+// Dynamically import MapComponent with no SSR
+const MapComponent = dynamic(() => import("./map-component"), { ssr: false });
+
 
 // Store categories
 const STORE_CATEGORIES = [
@@ -30,14 +34,14 @@ const STORE_CATEGORIES = [
     { id: "children", label: "Children's Clothing" },
     { id: "accessories", label: "Accessories" },
     { id: "shoes", label: "Shoes" },
-]
+];
 
 export default function StoreFinderApp() {
-    const [searchQuery, setSearchQuery] = useState("")
-    const [selectedCategories, setSelectedCategories] = useState<string[]>([])
-    const [filteredStores, setFilteredStores] = useState(SAMPLE_STORES)
-    const [selectedStore, setSelectedStore] = useState<any>(null)
-    const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
+    const [searchQuery, setSearchQuery] = useState("");
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+    const [filteredStores, setFilteredStores] = useState(SAMPLE_STORES);
+    const [selectedStore, setSelectedStore] = useState<any>(null);
+    const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
     // Filter stores based on search query and selected categories
     useEffect(() => {
@@ -47,30 +51,30 @@ export default function StoreFinderApp() {
                 const matchesSearch =
                     searchQuery === "" ||
                     store.properties.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    store.properties.address.toLowerCase().includes(searchQuery.toLowerCase())
+                    store.properties.address.toLowerCase().includes(searchQuery.toLowerCase());
 
                 const matchesCategories =
-                    selectedCategories.length === 0 || selectedCategories.some((cat) => store.properties.categories.includes(cat))
+                    selectedCategories.length === 0 || selectedCategories.some((cat) => store.properties.categories.includes(cat));
 
-                return matchesSearch && matchesCategories
+                return matchesSearch && matchesCategories;
             }),
-        }
+        };
 
-        setFilteredStores(filtered)
-    }, [searchQuery, selectedCategories])
+        setFilteredStores(filtered);
+    }, [searchQuery, selectedCategories]);
 
     // Handle category selection
     const handleCategoryChange = (category: string) => {
         setSelectedCategories((prev) =>
-            prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category],
-        )
-    }
+            prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category]
+        );
+    };
 
     // Clear all filters
     const clearFilters = () => {
-        setSearchQuery("")
-        setSelectedCategories([])
-    }
+        setSearchQuery("");
+        setSelectedCategories([]);
+    };
 
     return (
         <div className="flex flex-col h-screen">
@@ -81,7 +85,8 @@ export default function StoreFinderApp() {
                         <h1 className="text-l text-black bg-clip-text flex items-center">
                             <ChevronLeft size={20} className="mr-2 text-black" />
                             Back
-                        </h1></Link>
+                        </h1>
+                    </Link>
                     <Button
                         variant="ghost"
                         size="icon"
@@ -98,10 +103,10 @@ export default function StoreFinderApp() {
                 {/* Sidebar for filters - hidden on mobile by default */}
                 <aside
                     className={`
-            ${isMobileFilterOpen ? "block" : "hidden"} 
-            md:block bg-[var(--card-background)] w-full md:w-80 border-r border-[var(--border)] overflow-y-auto p-4
-            transition-all duration-300 ease-in-out
-        `}
+                        ${isMobileFilterOpen ? "block" : "hidden"} 
+                        md:block bg-[var(--card-background)] w-full md:w-80 border-r border-[var(--border)] overflow-y-auto p-4
+                        transition-all duration-300 ease-in-out
+                    `}
                 >
                     <div className="space-y-6">
                         {/* Search */}
@@ -165,7 +170,7 @@ export default function StoreFinderApp() {
                             <div className="flex flex-wrap gap-2 mb-4">
                                 {selectedCategories.length > 0 ? (
                                     selectedCategories.map((cat) => {
-                                        const category = STORE_CATEGORIES.find((c) => c.id === cat)
+                                        const category = STORE_CATEGORIES.find((c) => c.id === cat);
                                         return (
                                             <Badge
                                                 key={cat}
@@ -178,7 +183,7 @@ export default function StoreFinderApp() {
                                                     ✕
                                                 </span>
                                             </Badge>
-                                        )
+                                        );
                                     })
                                 ) : (
                                     <p className="text-sm text-[var(--muted-foreground)]">No filters applied</p>
@@ -230,7 +235,7 @@ export default function StoreFinderApp() {
 
                     {/* Map */}
                     <div className="flex-1 relative">
-                        <StoreMapWrapper
+                        <MapComponent
                             stores={filteredStores}
                             selectedStore={selectedStore}
                             setSelectedStore={setSelectedStore}
@@ -252,7 +257,6 @@ export default function StoreFinderApp() {
                                     <MapPin size={20} className="mr-2 text-[var(--primary)]" />
                                     {selectedStore.properties.name}
                                 </CardTitle>
-
                             </CardHeader>
 
                             <CardContent>
@@ -268,12 +272,12 @@ export default function StoreFinderApp() {
                                             </p>
                                             <div className="flex flex-wrap gap-2 mt-2">
                                                 {selectedStore.properties.categories.map((cat: string) => {
-                                                    const category = STORE_CATEGORIES.find((c) => c.id === cat)
+                                                    const category = STORE_CATEGORIES.find((c) => c.id === cat);
                                                     return (
                                                         <Badge key={cat} variant="secondary">
                                                             {category?.label}
                                                         </Badge>
-                                                    )
+                                                    );
                                                 })}
                                             </div>
                                         </div>
@@ -317,5 +321,5 @@ export default function StoreFinderApp() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

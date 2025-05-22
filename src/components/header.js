@@ -18,7 +18,7 @@ export default function Header() {
                             <span className="text-2xl font-bold bg-gradient-to-r from-[#FFA09B] to-[#FFE6C9] text-transparent bg-clip-text">
                                 Fast Fashion
                             </span>
-                            <span className="ml-1 text-sm mb-0.5 text-gray-500">by PeDiDi</span>
+                            <span className="ml-1 text-sm mb-1 text-gray-500">by PeDiDi</span>
                         </Link>
                     </div>
 

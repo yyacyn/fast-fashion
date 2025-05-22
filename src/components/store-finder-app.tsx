@@ -34,6 +34,9 @@ const STORE_CATEGORIES = [
     { id: "children", label: "Children's Clothing" },
     { id: "accessories", label: "Accessories" },
     { id: "shoes", label: "Shoes" },
+    { id: "casual", label: "Casual" },
+    { id: "formal", label: "Formal" },
+    { id: "sportswear", label: "Sportswear" },
 ];
 
 export default function StoreFinderApp() {

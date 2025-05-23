@@ -2,12 +2,15 @@
 
 import { useState, useEffect } from "react"
 import { getStoreSubmissions, updateStoreStatus } from "../lib/adminAuth"
+import dynamic from "next/dynamic";
 import AdminLayout from "../components/admin-layout"
 import { CheckCircle, XCircle, AlertTriangle, MapPin, Phone, Tag, Calendar, Clock } from "lucide-react"
 import { format } from "date-fns"
 import "../app/globals.css"
 import STORE_CATEGORIES from "../data/categories"
-import MapComponent from "../components/map-component";
+
+// Dynamically import MapComponent with no SSR
+const MapComponent = dynamic(() => import("./map-component"), { ssr: false })
 
 
 export default function AdminDashboardPage() {

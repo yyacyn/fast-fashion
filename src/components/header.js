@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X, Plus } from "lucide-react";
+import { Menu, X, Plus, User } from "lucide-react";
 import Link from "next/link";
 import '../app/globals.css';
 
@@ -9,7 +9,7 @@ export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
-        <header className="bg-white border-b border-[var(--border)] sticky top-0 z-50">
+        <header className="bg-white border-b border-[var(--border)] sticky top-0 z-[1000]"> {/* Increased z-index */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
@@ -47,6 +47,12 @@ export default function Header() {
                             className="bg-[var(--primary)] text-white hover:bg-[var(--primary-hover)] px-4 py-2 rounded-md text-sm font-medium flex items-center"
                         >
                             <Plus size={16} className="mr-1" /> Add Store
+                        </Link>
+                        <Link
+                            href="/admin-login"
+                            className="text-[var(--foreground)] hover:text-[var(--primary)] px-3 py-2 text-sm font-medium flex items-center"
+                        >
+                            <User size={16} className="mr-1" />Admin
                         </Link>
                     </nav>
 

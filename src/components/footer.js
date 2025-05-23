@@ -43,6 +43,11 @@ export default function Footer() {
                                         Add Store
                                     </Link>
                                 </li>
+                                <li>
+                                    <Link href="/admin-login" className="text-[var(--muted-foreground)] hover:text-[var(--primary)]">
+                                        Admin
+                                    </Link>
+                                </li>
                             </ul>
                         </div>
 
@@ -53,7 +58,7 @@ export default function Footer() {
                             <ul className="space-y-2">
                                 <li>
                                     <Link
-                                        href="/locator?category=men"
+                                        href="/locator"
                                         className="text-[var(--muted-foreground)] hover:text-[var(--primary)]"
                                     >
                                         Men's Clothing
@@ -61,7 +66,7 @@ export default function Footer() {
                                 </li>
                                 <li>
                                     <Link
-                                        href="/locator?category=women"
+                                        href="/locator"
                                         className="text-[var(--muted-foreground)] hover:text-[var(--primary)]"
                                     >
                                         Women's Clothing
@@ -69,7 +74,7 @@ export default function Footer() {
                                 </li>
                                 <li>
                                     <Link
-                                        href="/locator?category=children"
+                                        href="/locator"
                                         className="text-[var(--muted-foreground)] hover:text-[var(--primary)]"
                                     >
                                         Children's Clothing
@@ -77,10 +82,18 @@ export default function Footer() {
                                 </li>
                                 <li>
                                     <Link
-                                        href="/locator?category=accessories"
+                                        href="/locator"
                                         className="text-[var(--muted-foreground)] hover:text-[var(--primary)]"
                                     >
                                         Accessories
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="/locator"
+                                        className="text-[var(--muted-foreground)] hover:text-[var(--primary)]"
+                                    >
+                                        Shoes
                                     </Link>
                                 </li>
                             </ul>
@@ -93,7 +106,7 @@ export default function Footer() {
                             <ul className="space-y-2">
                                 <li className="text-[var(--muted-foreground)]">Bogor, Indonesia</li>
                                 <li className="text-[var(--muted-foreground)]">anargyat@goonmail.com</li>
-                                <li className="text-[var(--muted-foreground)]">+62 123 456 7890</li>
+                                <li className="text-[var(--muted-foreground)]">+62 813-1225-5011</li>
                             </ul>
                         </div>
                     </div>

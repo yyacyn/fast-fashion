@@ -56,33 +56,38 @@ function MapComponent({ stores, selectedStore, setSelectedStore }) {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
-            {stores.features.map((store) => {
-                const [lng, lat] = store.geometry.coordinates
-                const isSelected = selectedStore && selectedStore.properties.id === store.properties.id
+            {stores.features
+                ?.filter((store) => store.geometry?.coordinates)
+                .map((store) => {
+                    const [lng, lat] = store.geometry.coordinates;
+                    const isSelected = selectedStore && selectedStore.properties.id === store.properties.id;
 
-                return (
-                    <Marker
-                        key={store.properties.id}
-                        position={[lat, lng]}
-                        icon={markerIcon}
-                        eventHandlers={{
-                            click: () => {
-                                setSelectedStore(store)
-                            },
-                        }}
-                    >
-                        <Popup>
-                            <div>
-                                <h3 className="font-semibold">{store.properties.name}</h3>
-                                <p className="text-sm">{store.properties.address}</p>
-                                <button className="text-sm text-blue-600 hover:underline mt-1" onClick={() => setSelectedStore(store)}>
-                                    View Details
-                                </button>
-                            </div>
-                        </Popup>
-                    </Marker>
-                )
-            })}
+                    return (
+                        <Marker
+                            key={store.properties.id}
+                            position={[lat, lng]}
+                            icon={markerIcon}
+                            eventHandlers={{
+                                click: () => {
+                                    setSelectedStore(store);
+                                },
+                            }}
+                        >
+                            <Popup>
+                                <div>
+                                    <h3 className="font-semibold">{store.properties.name}</h3>
+                                    <p className="text-sm">{store.properties.address}</p>
+                                    {/* <button
+                                        className="text-sm text-blue-600 hover:underline mt-1"
+                                        onClick={() => setSelectedStore(store)}
+                                    >
+                                        View Details
+                                    </button> */}
+                                </div>
+                            </Popup>
+                        </Marker>
+                    );
+                })}
 
             <MapController selectedStore={selectedStore} stores={stores} />
         </MapContainer>

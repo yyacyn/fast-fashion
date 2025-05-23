@@ -1,10 +1,12 @@
-"use client";
+"use client"
 
-import { useState, useEffect } from "react";
-import { Search, MapPin, Filter, X, Menu, Phone, Navigation, ChevronLeft } from "lucide-react";
-import dynamic from "next/dynamic";  // Updated import
+import { useState, useEffect } from "react"
+import { Search, MapPin, Filter, X, Menu, Phone, Navigation, ChevronLeft } from "lucide-react"
+import dynamic from "next/dynamic"
+import { supabase } from "../lib/supabaseClient"
 import "../app/globals.css";
-import SAMPLE_STORES from "../data/sample-stores";
+import SAMPLE_STORES from "../data/sample-stores"
+import STORE_CATEGORIES from "../data/categories"
 
 // Import custom components
 import {
@@ -18,66 +20,122 @@ import {
     CardTitle,
     Separator,
     Badge,
-} from "./ui/custom-components";
-import React from "react";
-import Link from "next/link";
+} from "./ui/custom-components"
+import Link from "next/link"
 
 // Dynamically import MapComponent with no SSR
-const MapComponent = dynamic(() => import("./map-component"), { ssr: false });
+const MapComponent = dynamic(() => import("./map-component"), { ssr: false })
 
-
-// Store categories
-const STORE_CATEGORIES = [
-    { id: "men", label: "Men's Clothing" },
-    { id: "women", label: "Women's Clothing" },
-    { id: "unisex", label: "Unisex" },
-    { id: "children", label: "Children's Clothing" },
-    { id: "accessories", label: "Accessories" },
-    { id: "shoes", label: "Shoes" },
-    { id: "casual", label: "Casual" },
-    { id: "formal", label: "Formal" },
-    { id: "sportswear", label: "Sportswear" },
-];
 
 export default function StoreFinderApp() {
-    const [searchQuery, setSearchQuery] = useState("");
-    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-    const [filteredStores, setFilteredStores] = useState(SAMPLE_STORES);
-    const [selectedStore, setSelectedStore] = useState<any>(null);
-    const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("")
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([])
+    const [allStores, setAllStores] = useState(SAMPLE_STORES)
+    const [filteredStores, setFilteredStores] = useState(SAMPLE_STORES)
+    const [selectedStore, setSelectedStore] = useState<{
+        type: string
+        properties: {
+            id: string
+            name: string
+            address: string
+            categories: string[]
+            phone: string
+            web?: string
+            image?: string
+            description?: string
+        }
+        geometry: {
+            type: string
+            coordinates: [number, number]
+        }
+    } | null>(null)
+    const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+
+    // Fetch stores from Supabase
+    useEffect(() => {
+        async function fetchStores() {
+            setIsLoading(true)
+            try {
+                const { data, error } = await supabase.from("stores").select("*").eq("status", "approved")
+
+                if (error) {
+                    console.error("Error fetching stores:", error)
+                    return
+                }
+
+                if (data && data.length > 0) {
+                    // Convert Supabase data to GeoJSON format
+                    const dynamicFeatures = data.map((store) => ({
+                        type: "Feature",
+                        properties: {
+                            id: store.id,
+                            name: store.name,
+                            address: store.address,
+                            categories: store.categories || [],
+                            phone: store.phone,
+                            web: store.website,
+                            image: store.image,
+                            description: store.description,
+                            status: store.status,
+                        },
+                        geometry: {
+                            type: "Point",
+                            coordinates: store.location || [106.8019, -6.5971], // Default to Bogor if no location
+                        },
+                    }))
+
+                    // Combine with sample stores
+                    const combinedStores = {
+                        type: "FeatureCollection",
+                        features: [...SAMPLE_STORES.features, ...dynamicFeatures],
+                    }
+
+                    setAllStores(combinedStores)
+                    setFilteredStores(combinedStores)
+                }
+            } catch (error) {
+                console.error("Unexpected error fetching stores:", error)
+            } finally {
+                setIsLoading(false)
+            }
+        }
+
+        fetchStores()
+    }, [])
 
     // Filter stores based on search query and selected categories
     useEffect(() => {
         const filtered = {
             type: "FeatureCollection",
-            features: SAMPLE_STORES.features.filter((store) => {
+            features: allStores.features.filter((store) => {
                 const matchesSearch =
                     searchQuery === "" ||
                     store.properties.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    store.properties.address.toLowerCase().includes(searchQuery.toLowerCase());
+                    store.properties.address.toLowerCase().includes(searchQuery.toLowerCase())
 
                 const matchesCategories =
-                    selectedCategories.length === 0 || selectedCategories.some((cat) => store.properties.categories.includes(cat));
+                    selectedCategories.length === 0 || selectedCategories.some((cat) => store.properties.categories.includes(cat))
 
-                return matchesSearch && matchesCategories;
+                return matchesSearch && matchesCategories
             }),
-        };
+        }
 
-        setFilteredStores(filtered);
-    }, [searchQuery, selectedCategories]);
+        setFilteredStores(filtered)
+    }, [searchQuery, selectedCategories, allStores])
 
     // Handle category selection
-    const handleCategoryChange = (category: string) => {
+    const handleCategoryChange = (category) => {
         setSelectedCategories((prev) =>
-            prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category]
-        );
-    };
+            prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category],
+        )
+    }
 
     // Clear all filters
     const clearFilters = () => {
-        setSearchQuery("");
-        setSelectedCategories([]);
-    };
+        setSearchQuery("")
+        setSelectedCategories([])
+    }
 
     return (
         <div className="flex flex-col h-screen">
@@ -106,10 +164,10 @@ export default function StoreFinderApp() {
                 {/* Sidebar for filters - hidden on mobile by default */}
                 <aside
                     className={`
-                        ${isMobileFilterOpen ? "block" : "hidden"} 
-                        md:block bg-[var(--card-background)] w-full md:w-80 border-r border-[var(--border)] overflow-y-auto p-4
-                        transition-all duration-300 ease-in-out
-                    `}
+            ${isMobileFilterOpen ? "block" : "hidden"} 
+            md:block bg-[var(--card-background)] w-full md:w-80 border-r border-[var(--border)] overflow-y-auto p-4
+            transition-all duration-300 ease-in-out
+          `}
                 >
                     <div className="space-y-6">
                         {/* Search */}
@@ -173,7 +231,7 @@ export default function StoreFinderApp() {
                             <div className="flex flex-wrap gap-2 mb-4">
                                 {selectedCategories.length > 0 ? (
                                     selectedCategories.map((cat) => {
-                                        const category = STORE_CATEGORIES.find((c) => c.id === cat);
+                                        const category = STORE_CATEGORIES.find((c) => c.id === cat)
                                         return (
                                             <Badge
                                                 key={cat}
@@ -186,7 +244,7 @@ export default function StoreFinderApp() {
                                                     ✕
                                                 </span>
                                             </Badge>
-                                        );
+                                        )
                                     })
                                 ) : (
                                     <p className="text-sm text-[var(--muted-foreground)]">No filters applied</p>
@@ -208,6 +266,15 @@ export default function StoreFinderApp() {
                             <p className="text-sm font-medium">
                                 Found <span className="font-bold">{filteredStores.features.length}</span> stores
                             </p>
+                        </div>
+
+                        {/* Add Store Button */}
+                        <div className="mt-4">
+                            <Link href="/add-store">
+                                <Button variant="default" className="w-full">
+                                    Add Your Store
+                                </Button>
+                            </Link>
                         </div>
 
                         {/* Close button - only on mobile */}
@@ -236,13 +303,19 @@ export default function StoreFinderApp() {
                         </Button>
                     </div>
 
+                    {/* Loading state */}
+                    {isLoading && (
+                        <div className="absolute inset-0 bg-white bg-opacity-70 z-10 flex items-center justify-center">
+                            <div className="flex flex-col items-center">
+                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--primary)]"></div>
+                                <p className="mt-4 text-[var(--foreground)]">Loading stores...</p>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Map */}
                     <div className="flex-1 relative">
-                        <MapComponent
-                            stores={filteredStores}
-                            selectedStore={selectedStore}
-                            setSelectedStore={setSelectedStore}
-                        />
+                        <MapComponent stores={filteredStores} selectedStore={selectedStore} setSelectedStore={setSelectedStore} />
                     </div>
 
                     {/* Selected store details */}
@@ -274,15 +347,16 @@ export default function StoreFinderApp() {
                                                 <span>{selectedStore.properties.phone}</span>
                                             </p>
                                             <div className="flex flex-wrap gap-2 mt-2">
-                                                {selectedStore.properties.categories.map((cat: string) => {
-                                                    const category = STORE_CATEGORIES.find((c) => c.id === cat);
+                                                {selectedStore.properties.categories.map((cat) => {
+                                                    const category = STORE_CATEGORIES.find((c) => c.id === cat)
                                                     return (
                                                         <Badge key={cat} variant="secondary">
-                                                            {category?.label}
+                                                            {category?.label || cat}
                                                         </Badge>
-                                                    );
+                                                    )
                                                 })}
                                             </div>
+                                            
                                         </div>
 
                                         {/* Image on the right */}
@@ -324,5 +398,5 @@ export default function StoreFinderApp() {
                 </div>
             </div>
         </div>
-    );
+    )
 }

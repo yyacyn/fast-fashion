@@ -23,7 +23,7 @@ export default function CreditsPage() {
                         About this Project
                     </h1>
                     <p className="mt-4 text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
-                        This web app helps users discover and explore clothing stores around Bogor. It comes with useful features like search, category filters, and an interactive map to make finding shops easier. Built with Next.js, Tailwind CSS, OpenStreetMap, Supabase, and Leaflet, the app is designed to be fast, user-friendly, and responsive on all devices.
+                        This web app helps users discover and explore clothing stores around Your area. It comes with useful features like search, category filters, and an interactive map to make finding shops easier. Built with Next.js, Tailwind CSS, OpenStreetMap, Supabase, and Leaflet, the app is designed to be fast, user-friendly, and responsive on all devices.
                     </p>
                 </div>
             </div>
@@ -190,7 +190,7 @@ export default function CreditsPage() {
                                 <div className="bg-white p-6 rounded-md shadow-sm border border-[var(--border)]">
                                     <h3 className="text-lg font-semibold text-[var(--foreground)] mb-2">Store Data</h3>
                                     <p className="text-sm text-[var(--foreground)] mb-4">
-                                        The information about fashion stores in Bogor is collected from various sources, including:
+                                        The information about fashion stores is collected from various sources.
                                     </p>
                                     <ul className="space-y-2 text-sm">
                                         <li className="flex items-start">

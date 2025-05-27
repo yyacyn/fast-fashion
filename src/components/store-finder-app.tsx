@@ -346,6 +346,9 @@ export default function StoreFinderApp() {
                                                 <Phone size={16} className="mr-2 text-[var(--primary)]" />
                                                 <span>{selectedStore.properties.phone}</span>
                                             </p>
+                                            <p className="text-sm mb-3">
+                                                {selectedStore.properties.description || "No description available."}
+                                            </p>
                                             <div className="flex flex-wrap gap-2 mt-2">
                                                 {selectedStore.properties.categories.map((cat) => {
                                                     const category = STORE_CATEGORIES.find((c) => c.id === cat)

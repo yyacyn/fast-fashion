@@ -13,7 +13,7 @@ export default function Footer() {
                             <span className="ml-1 mt-1 text-sm text-gray-500">by PeDiDi</span>
                         </Link>
                         <p className="mt-2 text-sm text-[var(--muted-foreground)] max-w-md">
-                            Discover the best fashion stores in Bogor with our interactive map and comprehensive directory.
+                            Discover the best fashion stores with our interactive map and comprehensive directory.
                         </p>
                     </div>
 

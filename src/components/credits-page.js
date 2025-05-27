@@ -138,10 +138,10 @@ export default function CreditsPage() {
                                             <span className="w-2 h-2 bg-[var(--primary)] rounded-full mr-2"></span>
                                             Leaflet
                                         </li>
-                                        <li className="flex items-center">
+                                        {/* <li className="flex items-center">
                                             <span className="w-2 h-2 bg-[var(--primary)] rounded-full mr-2"></span>
                                             React Leaflet
-                                        </li>
+                                        </li> */}
                                         <li className="flex items-center">
                                             <span className="w-2 h-2 bg-[var(--primary)] rounded-full mr-2"></span>
                                             OpenStreetMap
@@ -165,7 +165,7 @@ export default function CreditsPage() {
                                         </li>
                                         <li className="flex items-center">
                                             <span className="w-2 h-2 bg-[var(--primary)] rounded-full mr-2"></span>
-                                            Vercel & v0
+                                            Vercel
                                         </li>
                                         <li className="flex items-center">
                                             <span className="w-2 h-2 bg-[var(--primary)] rounded-full mr-2"></span>

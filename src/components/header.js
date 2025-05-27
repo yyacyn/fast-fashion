@@ -97,6 +97,12 @@ export default function Header() {
                         >
                             <Plus size={16} className="mr-1" /> Add Store
                         </Link>
+                        <Link
+                            href="/admin-login"
+                            className="text-[var(--foreground)] hover:text-[var(--primary)] px-3 py-2 text-sm font-medium flex items-center"
+                        >
+                            <User size={16} className="mr-1" />Admin
+                        </Link>
                     </div>
                 </div>
             )}

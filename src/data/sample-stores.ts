@@ -1,5 +1,3 @@
-// Sample GeoJSON data for clothing stores in Bogor
-// In a real application, this would be fetched from an API
 const SAMPLE_STORES = {
     type: "FeatureCollection",
     features: [

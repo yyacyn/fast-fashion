@@ -24,7 +24,7 @@ export default function LandingPage() {
                             <h1 className="text-4xl md:text-5xl font-bold text-[var(--foreground)] leading-tight">
                                 Discover Fashion Stores in{" "}
                                 <span className="bg-gradient-to-r from-[#FFA09B] to-[#FFE6C9] text-transparent bg-clip-text">
-                                    Bogor
+                                    Your Area
                                 </span>
                             </h1>
                             <p className="mt-4 text-lg text-[var(--muted-foreground)] max-w-lg">
@@ -64,7 +64,7 @@ export default function LandingPage() {
                                     </div>
                                     <div>
                                         <p className="font-medium text-[var(--foreground)]">8+ Fashion Stores</p>
-                                        <p className="text-sm text-[var(--muted-foreground)]">In Bogor Area</p>
+                                        <p className="text-sm text-[var(--muted-foreground)]">In Your Area</p>
                                     </div>
                                 </div>
                             </div>
@@ -78,7 +78,7 @@ export default function LandingPage() {
             <section className="py-16 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl font-bold text-[var(--foreground)]">Discover the Best Fashion Stores in Bogor</h2>
+                        <h2 className="text-3xl font-bold text-[var(--foreground)]">Discover the Best Fashion Stores</h2>
                         <p className="mt-4 text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
                             Our platform helps you find the perfect clothing stores based on your preferences and location.
                         </p>
@@ -291,7 +291,7 @@ export default function LandingPage() {
             {/* CTA Section */}
             <section className="py-16 bg-gradient-to-r from-[#FFA09B] to-[#FFE6C9]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h2 className="text-3xl font-bold text-white mb-4">Own a Fashion Store in Bogor?</h2>
+                    <h2 className="text-3xl font-bold text-white mb-4">Own a Fashion Store?</h2>
                     <p className="text-white text-lg max-w-2xl mx-auto mb-8">
                         Add your store to our directory and reach more customers. It's free and only takes a few minutes.
                     </p>

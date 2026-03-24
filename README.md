@@ -1,4 +1,17 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Fast Fashion Store Locator
+
+Fast Fashion is a full-stack web application designed as a Geographic Information System (GIS) to map Bogor’s retail landscape. Leveraging a Volunteered Geographic Information (VGI) model, it bridges public discovery via an interactive map with community-driven data submission. This integrated system ensures a dynamic, up-to-date directory of fashion stores through a scalable architecture that connects the community with administrative review.
+
+## Tech Stack
+- **Frontend**: Next.js 15, React 19, TypeScript, Tailwind CSS
+- **Mapping**: Leaflet, React-Leaflet
+- **Backend (BaaS)**: Supabase (PostgreSQL, Storage, Row Level Security)
+- **Deployment**: Vercel
+
+## Key Features
+- **Interactive Store Locator**: A split-panel interface with real-time client-side filtering by category (Thrift, Streetwear, etc.) and GeoJSON-powered map markers.
+- **Store Submission System (VGI)**: A community-driven form with an embedded `LocationPicker` that allows users to drop a pin and upload store photos directly to cloud storage.
+- **Administrative Dashboard**: A tabbed management interface allowing admins to process "Pending" submissions into "Approved" or "Rejected" states with instant UI updates.
 
 ## Getting Started
 
@@ -10,27 +23,19 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To run this project locally, you will need to add the following environment variables to your `.env.local` file:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To learn more about the architecture and deep technical dives into the codebase, please review the `Technical Guidebook for Fast Fashion.md` included in this repository.
